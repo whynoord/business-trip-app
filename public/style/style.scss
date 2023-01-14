@@ -1,0 +1,56 @@
+$primary-color: #618fd4; 
+$secondary-color: #D8F2FE;
+
+body {
+    background-color: #FAFAFC;
+}
+
+.wrapper {
+    background-color: #FFF;
+}
+
+.list-group-item {
+    border: none;
+}
+
+.sidebar {
+    position: relative;
+    z-index: 100;
+
+    a {
+        text-decoration: none;
+        color: $primary-color;
+    }
+
+    .box:hover {
+        background-color: $secondary-color;
+    }
+}
+
+div[data-status='approved'] {
+    background-color: $primary-color;
+    color: $secondary-color;
+}
+
+div[data-status='pending'] {
+    background-color: #FFEEDC;
+    color: #F9A548;
+}
+
+div[data-status='rejected'] {
+    background-color: #e48f8f;
+    color: #8d0505;
+}
+
+.login {
+    input {
+        height: 55px;
+    }
+    button {
+        height: 55px;
+        width: 100%;
+    }
+    .card {
+        border-radius: 20px;
+    }
+}

@@ -1,7 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\CityController;
+use App\Http\Controllers\BusinessTripController;
+use App\Http\Controllers\Auth\LoginController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,10 +15,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', [LoginController::class, 'index'])->name('login');
+Route::get('business-trip-submission', [BusinessTripController::class, 'submission'])->name('submission');
+Route::group(['prefix' => 'city-master'], function(){
+    Route::get('/', [CityController::class, 'index'])->name('cityMaster');
 });
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('my-business-trip', [BusinessTripController::class, 'index'])->name('myBusinessTrip');

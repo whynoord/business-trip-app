@@ -1,0 +1,49 @@
+body {
+  background-color: #FAFAFC;
+}
+
+.wrapper {
+  background-color: #FFF;
+}
+
+.list-group-item {
+  border: none;
+}
+
+.sidebar {
+  position: relative;
+  z-index: 100;
+}
+.sidebar a {
+  text-decoration: none;
+  color: #618fd4;
+}
+.sidebar .box:hover {
+  background-color: #D8F2FE;
+}
+
+div[data-status=approved] {
+  background-color: #618fd4;
+  color: #D8F2FE;
+}
+
+div[data-status=pending] {
+  background-color: #FFEEDC;
+  color: #F9A548;
+}
+
+div[data-status=rejected] {
+  background-color: #e48f8f;
+  color: #8d0505;
+}
+
+.login input {
+  height: 55px;
+}
+.login button {
+  height: 55px;
+  width: 100%;
+}
+.login .card {
+  border-radius: 20px;
+}/*# sourceMappingURL=style.css.map */
