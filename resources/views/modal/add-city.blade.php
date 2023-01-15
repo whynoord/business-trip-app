@@ -11,7 +11,7 @@
         <div class="container">
             <div class="row d-flex justify-content-center">
                 <div class="col">
-                    <form method="post" action="">
+                    <form method="post" action="{{ route('storeCity') }}">
       
                         @csrf
                         <div class="mb-3">
@@ -37,8 +37,8 @@
                           <div class="mb-3">
                             <label for="oversea" class="form-label">Oversea</label>
                             <select name="oversea" class="form-select">
-                                <option value="tidak">No</option>
-                                <option value="ya">Yes</option>
+                                <option value="no">No</option>
+                                <option value="yes">Yes</option>
                             </select>
                           </div>
                         <button type="submit" class="btn btn-primary">Submit</button>

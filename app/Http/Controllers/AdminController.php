@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\City;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
-class CityController extends Controller
+class AdminController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,10 +15,10 @@ class CityController extends Controller
      */
     public function index()
     {
-        return view('city-master', [
-            'title' => 'City Master',
-            'cities' => City::latest()->get()
-    ]);
+        return view('admin', [
+            'title' => 'Admin',
+            'users' => User::where('role', 'employee')->orWhere('role', 'hrd')->latest()->get()
+        ]);
     }
 
     /**
@@ -38,7 +39,9 @@ class CityController extends Controller
      */
     public function store(Request $request)
     {
-        City::create($request->all());
+        $data = $request->all();
+        $data['password'] = Hash::make($request->password);
+        User::create($data);
         return redirect()->back();
     }
 
@@ -73,7 +76,7 @@ class CityController extends Controller
      */
     public function update(Request $request, $id)
     {
-        City::findOrFail($id)->update($request->all());
+        User::findOrFail($id)->update($request->all());
         return redirect()->back();
     }
 
@@ -85,7 +88,6 @@ class CityController extends Controller
      */
     public function destroy($id)
     {
-        City::findOrFail($id)->delete();
-        return redirect()->back();
+        //
     }
 }

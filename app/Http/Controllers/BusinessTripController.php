@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\City;
+use App\Models\BusinessTrip;
 
 class BusinessTripController extends Controller
 {
@@ -13,7 +15,12 @@ class BusinessTripController extends Controller
      */
     public function index()
     {
-        return view('my-business-trip', ['title' => 'My Business Trip']);
+        $uid = \Auth::user()->id;
+        return view('my-business-trip', [
+            'title' => 'My Business Trip',
+            'cities' => City::all(),
+            'bustrips' => BusinessTrip::with('city1', 'city2')->where('user_id', $uid)->get()
+        ]);
     }
 
     /**
@@ -23,7 +30,7 @@ class BusinessTripController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -34,7 +41,15 @@ class BusinessTripController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = new BusinessTrip;
+        $data['city_id_1'] = $request->origin_city;
+        $data['city_id_2'] = $request->destination_city;
+        $data['departure_date'] = date('Y-m-d H:i:s', strtotime($request->departure_date));
+        $data['return_date'] = date('Y-m-d H:i:s', strtotime($request->return_date));
+        $data['description'] = $request->description;
+        $data['user_id'] = \Auth::user()->id;
+        $data->save();
+        return redirect()->back();
     }
 
     /**
@@ -82,8 +97,42 @@ class BusinessTripController extends Controller
         //
     }
 
-    public function submission()
+    public function submission(Request $request)
     {
-        return view('business-trip-submission', ['title' => 'Business Trip Submission']);
+        $submissions = BusinessTrip::with('city1', 'city2', 'user')
+        ->where('status', 'pending')
+        ->latest()
+        ->get();
+
+        $histories = BusinessTrip::with('city1', 'city2', 'user')
+        ->where('status', 'approved')
+        ->orWhere('status', 'rejected')
+        ->latest('updated_at')
+        ->get();
+
+        return view('business-trip-submission', [
+            'title' => 'Business Trip Submission',
+            'request' => $request,
+            'submissions' => $submissions,
+            'histories' => $histories,
+            'sum' => $submissions->count()
+        ]);
+    }
+
+    public function approve(Request $request)
+    {
+        $data = BusinessTrip::where('id', $request->get('idbustrip'));
+
+        switch ($request->input('action')) {
+            case 'approve':
+                $data->update(['status' => 'approved']);
+                break;
+    
+            case 'reject':
+                $data->update(['status' => 'rejected']);
+                break;
+        }
+
+        return redirect()->back();
     }
 }

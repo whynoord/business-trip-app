@@ -7,7 +7,7 @@
             </div>
             <div class="modal-body">
                 <div class="container">
-                    <form method="post" action="">
+                    <form method="post" action="{{ route('approve') }}">
                         @csrf
                         <div class="row d-flex justify-content-center">
                             <div class="col">
@@ -20,7 +20,7 @@
                                 <div class="input-group input_kota mb-3">
                                     <input type="text" class="form-control" id="origin_city" disabled>
                                     <span class="input-group-text">&#8594;</span>
-                                    <input type="text" class="form-control" id="destionation_city" disabled>
+                                    <input type="text" class="form-control" id="destination_city" disabled>
                                 </div>
                                 <label for="input_city" class="form-label">Date</label>
                                 <div class="input-group input_kota mb-3">
@@ -45,7 +45,7 @@
                             </thead>
                             <tbody class="table-secondary">
                                 <tr>
-                                    <td id="day"></td>
+                                    <td id="days"></td>
                                     <td><span id="distance"></span> km</td>
                                     <td>Rp<span id="allowance"></span></td>
                                 </tr>

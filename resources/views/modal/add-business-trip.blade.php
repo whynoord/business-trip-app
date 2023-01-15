@@ -7,7 +7,7 @@
             </div>
             <div class="modal-body">
                 <div class="container">
-                    <form method="post" action="">
+                    <form method="post" action="{{route('storeBusinessTrip') }}">
                         @csrf
                         <div class="row d-flex justify-content-center">
 
@@ -16,14 +16,16 @@
                                 <div class="input-group input_kota mb-3">
                                     <select class="form-select" name="origin_city">
                                         <option>Select Origin</option>
-                                        <option value="Bandung">Bandung</option>
-                                        <option value="Jogja">Jogja</option>
+                                        @foreach ($cities as $city)
+                                            <option value="{{ $city->id }}">{{ $city->name }}</option>
+                                        @endforeach
                                     </select>
                                     <span class="input-group-text">&#8594;</span>
-                                    <select class="form-select" name="origin_city">
+                                    <select class="form-select" name="destination_city">
                                         <option>Select Destination</option>
-                                        <option value="Bandung">Bandung</option>
-                                        <option value="Jogja">Jogja</option>
+                                        @foreach ($cities as $city)
+                                            <option value="{{ $city->id }}">{{ $city->name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 <label for="date" class="form-label">Date</label>
@@ -65,20 +67,19 @@
     $(function() {
         $('.datepicker').datepicker();
         $('#day').text(0);
-        $('#departure_date, #return_date').on('keyup change',function(){
-            if($('#return_date').val() !== '')
-            {
+        $('#departure_date, #return_date').on('keyup change', function() {
+            if ($('#return_date').val() !== '') {
                 var departure_date = $('#departure_date').val();
                 var return_date = $('#return_date').val();
-                
+
                 var startDate = new Date(departure_date);
                 var endDate = new Date(return_date);
-    
-                var diff = endDate-startDate;
+
+                var diff = endDate - startDate;
                 var days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    
+
                 $('#day').text(days);
             }
-        });   
+        });
     })
 </script>

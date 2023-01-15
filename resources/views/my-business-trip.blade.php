@@ -21,18 +21,23 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td style="width: 3%">1</td>
-                        <td style="width: 21%">Bandung &#8594; Jogja</td>
-                        <td style="width: 25%">1 Jan &#8594; 2 Jan 2023 (2 days)</td>
-                        <td style="width: 40%" class="text-start">Lorem ipsum dolor sit amet</td>
-                        <td style="width: 12%">
-                            <div data-status="approved" class="rounded-pill p-1">
-                                Approved
-                            </div>
-                        </td>
-                    </tr>
-
+                    @foreach ($bustrips as $bustrip)
+                        <tr>
+                            <td style="width: 3%">{{ $loop->iteration }}</td>
+                            <td style="width: 21%">{{ $bustrip->city1->name }} &#8594; {{ $bustrip->city2->name }}</td>
+                            <td style="width: 25%">{{ date('d', strtotime($bustrip->departure_date)) . ' ' . substr(date('F', strtotime($bustrip->departure_date)), 0, 3) }}
+                                &#8594;
+                                {{ date('d', strtotime($bustrip->return_date)) . ' ' . substr(date('F', strtotime($bustrip->tanggal_akhir)), 0, 3) . ' ' .  date('Y', strtotime($bustrip->return_date))}}
+                                ({{ $bustrip->days }} days)
+                            </td>
+                            <td style="width: 40%" class="text-start">{{ $bustrip->description }}</td>
+                            <td style="width: 12%">
+                                <div data-status="{{ $bustrip->status }}" class="rounded-pill p-1">
+                                    {{ $bustrip->status }}
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>

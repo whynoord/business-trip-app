@@ -23,23 +23,24 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach ($cities as $city)
                     <tr>
-                        <td>1</td>
-                        <td>Bandung</td>
-                        <td>Jawa Tengah</td>
-                        <td>Jawa</td>
-                        <td>No</td>
-                        <td>123456</td>
-                        <td>123456</td>
+                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $city->name }}</td>
+                        <td>{{ $city->province }}</td>
+                        <td>{{ $city->island }}</td>
+                        <td>{{ $city->oversea }}</td>
+                        <td>{{ $city->latitude }}</td>
+                        <td>{{ $city->longitude }}</td>
                         <td>
-                            <a href="" data-bs-toggle="modal" data-bs-target="#editCity">
+                            <a href="" data-bs-toggle="modal" data-bs-target="#editCity-{{ $city->id }}">
                                 <i class="bi bi-pencil-square"></i>
                             </a>
-                            <a href=""><i class="bi bi-x-square-fill"></i></a>
+                            <a href="{{ route('deleteCity', $city->id) }}"><i class="bi bi-x-square-fill"></i></a>
                         </td>
-                     </tr>
-                     @include('modal.edit-city')
-
+                    </tr>
+                    @include('modal.edit-city')
+                    @endforeach
                 </tbody>
             </table>
         </div>  
